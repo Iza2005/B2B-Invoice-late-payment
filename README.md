@@ -1,5 +1,11 @@
 Heart Disease Detection Machine Learning
 
+BUT : 
+- faire du dataset heart disease une fastAPI / API REST (comprendre la différence)
+- la déployer avec docker
+- faire en ANGLAIS!!
+      
+
 Un README.md qui explique :
 
 - Le problème de ML résolu
