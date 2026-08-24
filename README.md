@@ -168,17 +168,19 @@ curl -X POST http://localhost:8000/predict \
 - **FastAPI** : I chose this simple framework because it turns a scikit-learn model into a REST API with minimal boilerplate, while auto-generating interactive documentation from the code itself, there a no separate spec to maintain.
 
 
+- **API python tests** : The test file is a good choice for API testing. I wanted to facilitate anyone running this project and quickly verify if the API's core behavior is working correctly on their own machine, without manually starting the server and sending requests by hand
+
+
 - **Manual validation for the request** : The request body is read as a raw JSON dict and checked field-by-field in validate_payload(). This keeps the entire request contract, every rule the API enforces, visible in one plain function, rather than split across schema classes.
 
 
 - **RandomForestClassifier** : I chose this thype of Machine Learning classifier model because late-payment risk factors interact non-linearly, for example, a poor credit score matters far more combined with a history of late payments than either alone, and a tree ensemble captures these interactions automatically, without hand-built feature crosses, and handles numeric and categorical inputs cleanly once encoded.
 
 
-- **class_weight="balanced"** : In the dataset, the target is imbalanced (~19% late). Missing a genuinely risky invoice costs the business more than a false positive, so the minority class is upweighted rather than optimizing for accuracy, which would just favor predicting "on_time" every time.
+- **class_weight="balanced"** : In the dataset, the target is imbalanced (~19% late). Even though putting more weight on the late paid invoices also gives more false positives, missing a risky invoice costs the business more than a false alarm, so the minority class is upweighted rather than optimizing for accuracy, which would just favor predicting "on_time" every time.
 
 
 - **Single scikit-learn Pipeline** : Preprocessing (scaling, encoding) and the model are saved as one fitted object. This guarantees the exact transformations used at training time are automatically reapplied at inference. Eliminating train/serve skew as a source of bugs.
-
 
 
 - **Model loaded once at startup** : I chose to keep the pipeline loaded into memory when the module starts, rather than reloading on every request. This keeps the /predict endpoint latency low and avoids repeated disk I/O on each call.
@@ -210,10 +212,12 @@ curl -X POST http://localhost:8000/predict \
 
 # Difficulties encountered : 
 
-Coming into this project, I had never used Docker or made a REST API call with curl before. Docker's core concepts, such as images and containers, layered builds, or port mapping, took real time to grasp, and my first tries failed or exposed the wrong port. Curl was also a new concept to understand, and I needed to take the first days to truly grasp how to structure a POST request with headers and a JSON body.
+Coming into this project, I had never used Docker or made a REST API call with curl before. Docker's core concepts, such as images and containers, layered builds, or port mapping, took real time to grasp, and my first tries failed or exposed the wrong port. Curl was also a new concept to understand, and I needed to truly grasp how to structure a POST request with headers and a JSON body.
 
 Where I used AI (Claude.ai and chatgpt): 
 
 - To generate the realistic dataset for this project
 - To help me solve some bugs in my coding (train.ipynb, main.py, test.py)
 - To answer my questions for curl, Docker and how to correctly develop the API for this project
+
+With that said, I only use AI tools as a support, not as a replacement for my own thinking and work.
