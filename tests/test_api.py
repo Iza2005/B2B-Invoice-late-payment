@@ -101,7 +101,7 @@ VALID_PAYLOAD = {
 
 # The 4 tests to run for the invoice API that use the functions above :
 def test_health_returns_ok(base_url):
-    """This function tests """
+    """This function tests the correct functionning of the API"""
     status, body = _get(f"{base_url}/health")
     assert status == 200
     assert body["status"] == "ok"
@@ -109,7 +109,7 @@ def test_health_returns_ok(base_url):
 
 
 def test_predict_with_valid_payload_returns_prediction(base_url):
-    """This function tests """
+    """This function tests the response of the API with a valid invoice"""
     status, body = _post_json(f"{base_url}/predict", VALID_PAYLOAD)
     assert status == 200
     assert body["prediction"] in {"on_time", "late"}
@@ -118,7 +118,7 @@ def test_predict_with_valid_payload_returns_prediction(base_url):
 
 
 def test_predict_with_missing_field_returns_400(base_url):
-    """This function tests """
+    """This function tests the response of the API with invalid invoice (missing features)"""
     incomplete_payload = VALID_PAYLOAD.copy()
     del incomplete_payload["customer_credit_score"]
 
@@ -128,7 +128,7 @@ def test_predict_with_missing_field_returns_400(base_url):
 
 
 def test_predict_with_invalid_sales_channel_returns_400(base_url):
-    """This function tests """
+    """This function tests the response of the API with invalid sales_channel values"""
     bad_payload = VALID_PAYLOAD.copy()
     bad_payload["sales_channel"] = "carrier_pigeon"
 
