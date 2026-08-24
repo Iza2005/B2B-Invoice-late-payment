@@ -217,7 +217,7 @@ Coming into this project, I had never used Docker or made a REST API call with c
 Where I used AI (Claude.ai and chatgpt): 
 
 - To generate the realistic dataset for this project
-- To help me solve some bugs in my coding (train.ipynb, main.py, test.py)
+- To help me solve some bugs in my coding and make it more effective (train.ipynb, main.py, test.py)
 - To answer my questions for curl, Docker and how to correctly develop the API for this project
 
-With that said, I only use AI tools as a support, not as a replacement for my own thinking and work.
+With that said, I only use AI tools as a support, not as a replacement of my own thinking.
