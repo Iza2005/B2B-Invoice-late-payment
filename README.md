@@ -206,3 +206,14 @@ curl -X POST http://localhost:8000/predict \
 - The current ROC AUC (~0.66) reflects the fact that late payment is only partly predictable
   from these features alone, and other variables (industry sector, macroeconomic context...) would
   likely improve it.
+
+
+# Difficulties encountered : 
+
+Coming into this project, I had never used Docker or made a REST API call with curl before. Docker's core concepts, such as images and containers, layered builds, or port mapping, took real time to grasp, and my first tries failed or exposed the wrong port. Curl was also a new concept to understand, and I needed to take the first days to truly grasp how to structure a POST request with headers and a JSON body.
+
+Where I used AI (Claude.ai and chatgpt): 
+
+- To generate the realistic dataset for this project
+- To help me solve some bugs in my coding (train.ipynb, main.py, test.py)
+- To answer my questions for curl, Docker and how to correctly develop the API for this project
