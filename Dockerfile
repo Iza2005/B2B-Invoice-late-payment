@@ -5,7 +5,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# api/model.pkl must already exist (produced by notebooks/train.ipynb) —
+# api/model.pkl must already exist (produced by notebooks/train.ipynb)
 # The training does not happen inside the image.
 COPY api/ ./api/
 
