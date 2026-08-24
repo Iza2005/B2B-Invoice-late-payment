@@ -2,8 +2,7 @@
 FastAPI service for the B2B invoice late-payment classifier.
 
 Here, the JSON body is read as a plain dict and validated by hand in
-`validate_payload()`. This keeps the request/response contract in ordinary
-Python.
+`validate_payload()`
 """
 
 import pathlib
@@ -17,12 +16,11 @@ MODEL_PATH = pathlib.Path(__file__).parent / "model.pkl"
 
 app = FastAPI(
     title="Invoice Late-Payment Prediction API",
-    description="Predicts whether a B2B invoice will be paid late.",
+    description="Predicts whether a B2B invoice will be paid late",
     version="1.0.0",
 )
 
-# Loaded once when the module is imported (when the server starts),
-# not on every request.
+# Loaded once when the module is imported (when the server starts), not on every request
 artifact = joblib.load(MODEL_PATH)
 model = artifact["model"]
 NUMERIC_FEATURES = artifact["numeric_features"]
@@ -30,7 +28,7 @@ CATEGORICAL_FEATURES = artifact["categorical_features"]
 FEATURES = artifact["features"]
 VALID_SALES_CHANNELS = set(artifact["sales_channel_categories"])
 
-# field -> (python types, optional min, optional max)
+# field : python types, optional min, optional max
 NUMERIC_FIELD_RULES = {
     "invoice_amount": ((int, float), 0, None),
     "payment_terms_days": ((int,), 1, 180),
@@ -47,7 +45,7 @@ NUMERIC_FIELD_RULES = {
 
 
 def validate_payload(payload: dict) -> list[str]:
-    """Returns a list of human-readable error messages (empty list = valid)."""
+    """Returns a list of human-readable error messages (empty list = valid)"""
     errors = []
 
     if not isinstance(payload, dict):
@@ -79,11 +77,13 @@ def validate_payload(payload: dict) -> list[str]:
     return errors
 
 
+# The first endpoint of the API : gives information about the status of the operation 
 @app.get("/health")
 def health():
     return {"status": "ok", "model_loaded": model is not None}
 
 
+# The second endpoint that receives information and returns some according to the input 
 @app.post("/predict")
 async def predict(request: Request):
     try:
